@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123b32">
+  <meta name="description" content="Randomise badminton doubles matches and avoid repeating partnerships during a session.">
+  <title>Badminton Mixer</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark" aria-hidden="true">B</div>
+    <div><h1>Badminton Mixer</h1><p>Random doubles. More variety.</p></div>
+  </header>
+
+  <main>
+    <section id="setup" class="panel">
+      <div class="section-heading"><div><p class="eyebrow">NEW SESSION</p><h2>Who's playing?</h2></div></div>
+      <label for="players">Player names <span class="muted">(one per line)</span></label>
+      <textarea id="players" rows="7" placeholder="e.g.&#10;Aisha&#10;Ben&#10;Charlie&#10;Dylan" autocapitalize="words"></textarea>
+      <div class="small-row"><span id="player-count">0 players</span><button id="clear-names" class="text-button" type="button">Clear names</button></div>
+
+      <div class="field-grid">
+        <div><label for="courts">Number of courts</label><div class="stepper"><button type="button" id="courts-minus" aria-label="Decrease courts">−</button><output id="courts-value">2</output><button type="button" id="courts-plus" aria-label="Increase courts">+</button></div></div>
+        <div class="field-note"><span class="mini-icon">2v2</span><span>Each court needs<br><strong>4 players</strong></span></div>
+      </div>
+      <label class="toggle-line"><input id="allow-repeat" type="checkbox"><span class="toggle-ui"></span><span><strong>Allow repeat partnerships</strong><small>Use this if no fresh combination can be found.</small></span></label>
+      <button id="start-session" class="primary full">Start today's session <span aria-hidden="true">→</span></button>
+      <p id="setup-message" class="message" role="status"></p>
+      <p class="privacy-note"><span aria-hidden="true">🔒</span> Your sessions are saved on this device. No account needed.</p>
+    </section>
+
+    <section id="session" hidden>
+      <div class="session-heading">
+        <div><p class="eyebrow" id="session-date"></p><h2>Today's session</h2><p class="muted" id="session-summary"></p></div>
+        <button id="new-session" class="outline small-button" type="button">New session</button>
+      </div>
+      <div class="session-controls panel compact">
+        <label class="toggle-line"><input id="session-repeat" type="checkbox"><span class="toggle-ui"></span><span><strong>Allow repeat partnerships</strong><small>Can be changed between rounds.</small></span></label>
+        <button id="generate-round" class="primary full">🎲 Generate next round</button>
+        <p id="round-message" class="message" role="status"></p>
+      </div>
+      <div id="round-area"></div>
+      <section class="panel history-panel">
+        <div class="history-head"><div><p class="eyebrow">SESSION</p><h3>Pairing history</h3></div><span id="pair-count" class="count-pill">0 pairs</span></div>
+        <p class="muted">Partnerships listed here have already played together today.</p>
+        <div id="pair-history" class="pair-history"></div>
+      </section>
+    </section>
+
+    <section class="panel saved-panel">
+      <div class="history-head"><div><p class="eyebrow">ON THIS DEVICE</p><h3>Previous sessions</h3></div><button id="clear-history" class="text-button" type="button">Clear</button></div>
+      <div id="saved-sessions" class="saved-sessions"><p class="muted">No saved sessions yet.</p></div>
+    </section>
+  </main>
+  <footer><p>Badminton Mixer · Made for your court sessions</p></footer>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+      window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+    }
+  </script>
+</body>
+</html>
